@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lotofácil — Gerador de Jogos</title>
+    <meta name="theme-color" content="#2165da" />
+    <meta name="description" content="Gerador de quatro jogos da Lotofácil a partir do último resultado." />
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="apple-touch-icon" href="icons/icon-192.svg" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <header class="hero">
+        <div class="brand-mark">LF</div>
+        <div>
+          <p class="eyebrow">Montagem inteligente</p>
+          <h1>Lotofácil</h1>
+        </div>
+        <button class="secondary compact" id="loadLatest">Buscar último resultado</button>
+      </header>
+
+      <section class="card intro">
+        <div>
+          <p class="eyebrow">Resultado-base</p>
+          <h2>Configure a partir do último concurso</h2>
+          <p>Informe o concurso e as 15 dezenas sorteadas. O gerador separa automaticamente as dezenas que não saíram.</p>
+        </div>
+        <div id="status" class="status" role="status">Pronto para configurar.</div>
+      </section>
+
+      <section class="card result-card">
+        <div class="field-row">
+          <label>Concurso <input id="contest" inputmode="numeric" placeholder="Ex.: 3456" /></label>
+          <label class="numbers-field">15 dezenas sorteadas <input id="drawnInput" inputmode="numeric" placeholder="Ex.: 01 02 03 04 ... 15" /></label>
+        </div>
+        <div class="actions"><button class="primary" id="applyResult">Usar este resultado</button><button class="text-button" id="exampleResult">Preencher exemplo</button></div>
+        <p class="helper">Use números de 01 a 25 separados por espaço, vírgula ou hífen. O resultado fica salvo somente neste dispositivo.</p>
+      </section>
+
+      <section class="workspace hidden" id="workspace">
+        <div class="section-title"><div><p class="eyebrow">Sua estratégia</p><h2>Escolha as dezenas para os 4 jogos</h2></div><p id="composition" class="composition"></p></div>
+        <div class="strategy-grid">
+          <article class="card group-card drawn"><div class="card-heading"><div><span class="pill blue">Sorteadas</span><h3>Dezenas que saíram</h3></div><span id="drawnCount" class="count"></span></div><p class="helper">Marque as fixas que devem aparecer em todos os jogos.</p><div class="number-grid" id="drawnGrid"></div><label class="quantity">Aleatórias deste grupo, por jogo <input id="drawnRandom" type="number" min="0" value="0" /></label></article>
+          <article class="card group-card missed"><div class="card-heading"><div><span class="pill amber">Não sorteadas</span><h3>Dezenas que não saíram</h3></div><span id="missedCount" class="count"></span></div><p class="helper">Marque as fixas que devem aparecer em todos os jogos.</p><div class="number-grid" id="missedGrid"></div><label class="quantity">Aleatórias deste grupo, por jogo <input id="missedRandom" type="number" min="0" value="0" /></label></article>
+        </div>
+        <div class="card generate-card"><div><h3>Montagem dos jogos</h3><p id="validation" class="helper">Selecione as dezenas fixas e informe quantas aleatórias usar.</p></div><button class="primary large" id="generate" disabled>Gerar 4 jogos</button></div>
+      </section>
+
+      <section class="results hidden" id="results"><div class="section-title"><div><p class="eyebrow">Sugestões para o próximo concurso</p><h2>Seus 4 jogos</h2></div><button class="secondary" id="copyGames">Copiar jogos</button></div><div id="games" class="games-grid"></div><p class="disclaimer">As sugestões são combinações geradas a partir das suas regras; não há garantia de premiação.</p></section>
+    </main>
+    <script src="app.js"></script>
+    <script>
+      if ('serviceWorker' in navigator) navigator.serviceWorker.register('./service-worker.js');
+    </script>
+  </body>
+</html>
